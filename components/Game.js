@@ -12,7 +12,6 @@ function randomMaker(o){
      x = o[--i], o[i] = o[j], o[j] = x);
     return o;
 }
-
 function getHint(secret, guess) {
     let bulls = 0;
     let cows = 0;
@@ -40,7 +39,6 @@ function getHint(secret, guess) {
         return  "Bulls: "+ bulls + " --- " + "Bulls: " + cows;
       }
 }
-
 function getNumber(Mynum){
   var number = Mynum
   return number
@@ -48,7 +46,6 @@ function getNumber(Mynum){
 let RandomNumber = GuessNumber()
 
 class Game extends Component {
-    
       constructor(props) {
         super(props)
         this.state = {
@@ -60,24 +57,20 @@ class Game extends Component {
         this.randomNum = RandomNumber
         this.refreshScreen = this.refreshScreen.bind(this)
       }
-
       refreshScreen() {
           this.setState({ lastRefresh: Date(Date.now()).toString() })
       }
-
       NewGame=()=>{
          let num2 = GuessNumber()
          this.randomNum=num2
          console.log(this.randomNum)
       }
-
       Guess = (number) => {
           let num = this.randomNum
           var GuessedNumber = this.state.number
           var info = getHint(num.toString(),GuessedNumber.toString())
           console.log(info)
       }
-
    render() {
         return (
             <View style = {styles.container}>
