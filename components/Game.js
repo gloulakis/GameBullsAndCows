@@ -44,6 +44,7 @@ function getNumber(Mynum){
   return number
 }
 let RandomNumber = GuessNumber()
+let info
 
 class Game extends Component {
       constructor(props) {
@@ -51,8 +52,10 @@ class Game extends Component {
         this.state = {
           lastRefresh: Date(Date.now()).toString(),
           number: '',
-          result:'',
-          randomNum:''
+          result:[],
+          GameInfo:'',
+          info:'',
+          randomNum:'',
         }
         this.randomNum = RandomNumber
         this.refreshScreen = this.refreshScreen.bind(this)
@@ -65,15 +68,28 @@ class Game extends Component {
          this.randomNum=num2
          console.log(this.randomNum)
       }
+
       Guess = (number) => {
+          var data = []
+          this.result = data
+
           let num = this.randomNum
+
           var GuessedNumber = this.state.number
-          var info = getHint(num.toString(),GuessedNumber.toString())
+
+          info = getHint(num.toString(),GuessedNumber.toString())
+          data.push(info)
           console.log(info)
+          alert(info)
+          console.log("this is array-> "+ this.result+" Length: "+this.result.length)
       }
+
+ 
+
    render() {
         return (
             <View style = {styles.container}>
+               
                <Button onPress={this.NewGame} title="New Game" />
                <TextInput style = {styles.input}
                   placeholder = "Guess the number"
@@ -83,6 +99,8 @@ class Game extends Component {
                   onChangeText = {number =>this.setState({number})}/>
                
                <Button onPress={this.Guess} title="Click to Guess" />
+
+
             </View>
          )
        }
