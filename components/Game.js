@@ -5,15 +5,12 @@ function GuessNumber(){
     var digits = "123456789".split(''),
         first = randomMaker(digits).pop();
     return parseInt( first + randomMaker(digits).join('').substring(0,3), 10);
-   }
+}
 function randomMaker(o){
     for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i),
      x = o[--i], o[i] = o[j], o[j] = x);
     return o;
 }
-
-
-
 function getResult(secret, guess) {
    var bulls = 0;
    var cows = 0;
@@ -32,16 +29,16 @@ function getResult(secret, guess) {
        numbers[g] --;
      }
    }
-   return bulls + " - " + cows ;
- }
-
+   if(bulls != 4){
+      return bulls + " - " + cows ;
+   }else return "You Win !!!"
+  
+}
 function hasRepeatingdigits(N) {return (/([0-9]).*?\1/).test(N)} 
 
 let RandomNumber = GuessNumber()
 let info
 var dataInfo = []
-
-const image = { uri: "https://2.bp.blogspot.com/-uGWn_I8sK_M/VCa_PNjdc9I/AAAAAAAADas/G9ovg7LeoOY/s1600/GameBg_iPad.png" };
 
 class Game extends Component {
       constructor(props) {
@@ -78,7 +75,6 @@ class Game extends Component {
                         alert("Your number length is: "+GuessedNumber.length+ " digits and must be 4 digits")}
                         else{
                            info = getResult(num.toString(),GuessedNumber.toString())
-                           alert(info)
                            dataInfo.push(info)
                              for(let i=0 ; i<dataInfo.length;i++){
                                 console.log("Times: "+(i+1))
@@ -108,7 +104,7 @@ class Game extends Component {
       
         return (
          <View style = {styles.container}>
-         <ImageBackground source={image} style={styles.image}>
+         <ImageBackground source={require('../assets/backImage.png')} style={styles.image}>
             
                 <TouchableOpacity
                                     style={styles.ButtonNewGame}
@@ -172,7 +168,7 @@ export default Game
 const styles = StyleSheet.create({
    container: {
       flex: 1,
-      flexDirection: 'column'
+      flexDirection: 'column',
    },
    image:{
     flex: 1,
