@@ -6,10 +6,7 @@ import Game from './components/Game'
 export default function App() {
 
   return (
-    <SafeAreaView style = {styles.container}>
-            <Game/>
-    </SafeAreaView>
-
+         <Game/>
   );
 }
 
