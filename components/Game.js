@@ -12,35 +12,28 @@ function randomMaker(o){
     return o;
 }
 
-let bulls=0
-let cows =0
 
-function getHint(secret, guess) {
- 
-    let counter=0;
-    var numbers = new Array(10);
-    for (var i=0; i<10; i++){
-      numbers[i] = 0;
-    }
-       for (var i = 0; i<secret.length; i++) {
 
-          var s = secret.charCodeAt(i) - 48;
-          var g = guess.charCodeAt(i) - 48;
-          console.log(s,g)
-          if (s == g) bulls++;
-          else {
-            if (numbers[s] < 0) cows++;
-            if (numbers[g] > 0) cows++; 
-            numbers[s] ++;
-            numbers[g] --; 
-            }
-        }
-      if (bulls == 4){
-        return "You Win!!";
-      }else{
-        return  bulls + "   -   " + cows;
-      }
-}
+function getResult(secret, guess) {
+   var bulls = 0;
+   var cows = 0;
+   var numbers = new Array(10);
+   for (var i=0; i<10; i++){
+     numbers[i] = 0;
+   }
+   for (var i = 0; i<secret.length; i++) {
+     var s = secret.charCodeAt(i) - 48;
+     var g = guess.charCodeAt(i) - 48;
+     if (s == g) bulls++;
+     else {
+       if (numbers[s] < 0) cows++;
+       if (numbers[g] > 0) cows++;
+       numbers[s] ++;
+       numbers[g] --;
+     }
+   }
+   return bulls + " - " + cows ;
+ }
 
 function hasRepeatingdigits(N) {return (/([0-9]).*?\1/).test(N)} 
 
@@ -84,7 +77,7 @@ class Game extends Component {
                      if(GuessedNumber.length < 4){
                         alert("Your number length is: "+GuessedNumber.length+ " digits and must be 4 digits")}
                         else{
-                           info = getHint(num.toString(),GuessedNumber.toString())
+                           info = getResult(num.toString(),GuessedNumber.toString())
                            alert(info)
                            dataInfo.push(info)
                              for(let i=0 ; i<dataInfo.length;i++){
