@@ -6,11 +6,13 @@ function GuessNumber(){
         first = randomMaker(digits).pop();
     return parseInt( first + randomMaker(digits).join('').substring(0,3), 10);
 }
+
 function randomMaker(o){
     for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i),
      x = o[--i], o[i] = o[j], o[j] = x);
     return o;
 }
+
 function getResult(secret, guess) {
    var bulls = 0;
    var cows = 0;
@@ -32,8 +34,8 @@ function getResult(secret, guess) {
    if(bulls != 4){
       return bulls + " - " + cows ;
    }else return "You Win !!!"
-  
 }
+
 function hasRepeatingdigits(N) {return (/([0-9]).*?\1/).test(N)} 
 
 let RandomNumber = GuessNumber()
@@ -89,7 +91,7 @@ class Game extends Component {
       }
 
       GameResultcount(){
-        return <Text style={{color:'black',justifyContent:'center',alignItems:'center',fontSize:'30'}}> {dataInfo.length}</Text>
+        return <Text style={{color:'black',justifyContent:'center',alignItems:'center',fontSize:30}}> {dataInfo.length}</Text>
       }
 
       GameResult(){
@@ -97,11 +99,10 @@ class Game extends Component {
          for(var i=0;i<dataInfo.length;i++){
             infoRus = dataInfo[i]
          }
-         return <Text style={{color:'black',justifyContent:'center',alignItems:'center',fontSize:'30'}}>{infoRus}</Text> 
+         return <Text style={{color:'black',justifyContent:'center',alignItems:'center',fontSize:30}}>{infoRus}</Text> 
       }
 
    render() {
-      
         return (
          <View style = {styles.container}>
          <ImageBackground source={require('../assets/backImage.png')} style={styles.image}>
@@ -133,7 +134,6 @@ class Game extends Component {
                   </View>
                  </View>
             <View style={styles.center}>
-               
                  <View style={styles.input}>
                      <TextInput
                      placeholder = "Enter a number..."
@@ -142,7 +142,6 @@ class Game extends Component {
                      autoCapitalize = "none"
                      onChangeText = {number =>this.setState({number})}/>
                  </View>
-               
             </View>
                 <View style={styles.modal3}>
                             <Image
@@ -157,7 +156,6 @@ class Game extends Component {
                            underlayColor='white'>
                            <Text style={styles.Guesstext}>Click to Guess</Text>                
                   </TouchableOpacity>
-               
         </ImageBackground>
         </View>
          )
