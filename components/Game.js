@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ImageBackground, TextInput, StyleSheet,TouchableOpacity,Text, Modal,FlatList, Image } from 'react-native'
+import { View, ImageBackground, TextInput, StyleSheet,TouchableOpacity,Text, Modal,ScrollView, Image } from 'react-native'
 
 function GuessNumber(){
     var digits = "123456789".split(''),
@@ -34,6 +34,7 @@ function getResult(secret, guess) {
    if(bulls != 4){
       return bulls + " - " + cows ;
    }else return "You Win !!!"
+
 }
 
 function hasRepeatingdigits(N) {return (/([0-9]).*?\1/).test(N)} 
@@ -41,6 +42,7 @@ function hasRepeatingdigits(N) {return (/([0-9]).*?\1/).test(N)}
 let RandomNumber = GuessNumber()
 let info
 var dataInfo = []
+var numbers = []
 
 class Game extends Component {
       constructor(props) {
@@ -51,14 +53,7 @@ class Game extends Component {
           randomNum:'',
           count:'',
         }
-
-        this.randomNum = RandomNumber
-      }
-
-      NewGame=()=>{
-         let num2 = GuessNumber()
-         this.randomNum=num2
-         console.log(this.randomNum)
+        this.randomNum = RandomNumber 
       }
 
       Guess = (number) => {
@@ -78,6 +73,7 @@ class Game extends Component {
                         else{
                            info = getResult(num.toString(),GuessedNumber.toString())
                            dataInfo.push(info)
+                           numbers.push(GuessedNumber.toString())
                              for(let i=0 ; i<dataInfo.length;i++){
                                 console.log("Times: "+(i+1))
                               }
@@ -91,28 +87,58 @@ class Game extends Component {
       }
 
       GameResultcount(){
-        return <Text style={{color:'black',justifyContent:'center',alignItems:'center',fontSize:30}}> {dataInfo.length}</Text>
+         var count = 0
+         if(dataInfo.length>0){
+            count = dataInfo.length
+            console.log("Count: "+count)
+            return <Text style={{color:'black',justifyContent:'center',alignItems:'center',fontSize:25}}> {count}</Text>
+            
+         }else{
+            count = ''
+            console.log("Count: "+count)
+            return <Text style={{color:'black',justifyContent:'center',alignItems:'center',fontSize:25}}> {count}</Text>
+         }
       }
-
       GameResult(){
-         var infoRus
+         var infoRus = ''
          for(var i=0;i<dataInfo.length;i++){
             infoRus = dataInfo[i]
          }
-         return <Text style={{color:'black',justifyContent:'center',alignItems:'center',fontSize:30}}>{infoRus}</Text> 
+         return <Text style={{color:'black',justifyContent:'center',alignItems:'center',fontSize:25}}>{infoRus}</Text> 
+      }
+      GameInfo(){
+         var PrNum = ''
+         for(var i=0;i<numbers.length;i++){
+            PrNum = numbers[i]
+         }
+         return <Text style={{color:'black',fontWeight:'bold',textAlign:'center',padding:1,fontSize:14}}>Last number: {PrNum}</Text> 
+      }
+      NewGame(){
+         let num2 = GuessNumber()
+         this.randomNum=num2
+         console.log(this.randomNum)
+      }
+      
+      functionCompine(){
+         this.GameInfo()
+         this.GameResult()
+         this.GameResultcount()
+         this.NewGame()
+         this.forceUpdate()
       }
 
    render() {
         return (
          <View style = {styles.container}>
          <ImageBackground source={require('../assets/backImage.png')} style={styles.image}>
-            
-                <TouchableOpacity
-                                    style={styles.ButtonNewGame}
-                                    onPress={this.NewGame}
-                                    underlayColor='white'>
-                                    <Text style={styles.newGameText}>New Game</Text>
-                  </TouchableOpacity>
+                  <View style={styles.ButtonNewGame}>
+                           <TouchableOpacity
+                                             onPress={() => this.functionCompine()}
+                                             underlayColor='white'>
+                                             <Text style={styles.newGameText}>New Game</Text>
+                           </TouchableOpacity>
+                  </View>
+                  
                 <View style={styles.resultView}>
                  <View style={styles.modal}>
                             <Image
@@ -134,9 +160,11 @@ class Game extends Component {
                   </View>
                  </View>
             <View style={styles.center}>
+
                  <View style={styles.input}>
                      <TextInput
                      placeholder = "Enter a number..."
+                     keyboardShouldPersistTaps='handled'
                      keyboardType={'numeric'}
                      placeholderTextColor = "#9a73ef"
                      autoCapitalize = "none"
@@ -144,11 +172,7 @@ class Game extends Component {
                  </View>
             </View>
                 <View style={styles.modal3}>
-                            <Image
-                                 style={{ width: 1, height: 1, resizeMode: 'stretch' }}
-                                 source={require('../assets/CounterImage.jpg')}
-                               />
-                        <Text style={{fontSize:10,alignItems:'center'}}>{this.setState.number}</Text>
+                        <this.GameInfo/>
                   </View>
                   <TouchableOpacity
                            style={styles.GuessView}
@@ -190,12 +214,13 @@ const styles = StyleSheet.create({
       width: '20%', 
       height: '10%', 
       borderColor:'yellow',
-      borderWidth:1,
+      borderWidth:2,
+      left:19,
       backgroundColor: '#FF9800', 
       justifyContent: 'center', 
       alignItems: 'center',
       position: 'absolute',
-      top:"14%",
+      top:"13%",
       borderRadius: 100/2,
       padding:1
    },
@@ -213,6 +238,20 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       position: 'absolute',
       bottom: '37%',
+      borderRadius: 100/2,
+      borderColor:'white',
+      
+   },
+   GuessView2: {
+      width: '100%', 
+      height: 50, 
+      backgroundColor: 'green', 
+      borderColor:'white',
+      borderWidth:1,
+      justifyContent: 'center', 
+      alignItems: 'center',
+      position: 'absolute',
+      bottom: '60%',
       borderRadius: 100/2,
       borderColor:'white',
       
@@ -263,9 +302,9 @@ const styles = StyleSheet.create({
       borderColor:'orange',
       borderWidth: 4,
       justifyContent:'space-between',
-      width: '30%',
-      height: 20,
-      padding:10,
+      width: '45%',
+      height: 29,
+      padding:1,
       backgroundColor:'white',
       borderRadius: 44/2,     
       position: 'absolute',
