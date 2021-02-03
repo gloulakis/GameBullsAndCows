@@ -88,16 +88,8 @@ class Game extends Component {
 
       GameResultcount(){
          var count = 0
-         if(dataInfo.length>0){
             count = dataInfo.length
-            console.log("Count: "+count)
             return <Text style={{color:'black',justifyContent:'center',alignItems:'center',fontSize:25}}> {count}</Text>
-            
-         }else{
-            count = ''
-            console.log("Count: "+count)
-            return <Text style={{color:'black',justifyContent:'center',alignItems:'center',fontSize:25}}> {count}</Text>
-         }
       }
       GameResult(){
          var infoRus = ''
@@ -116,7 +108,6 @@ class Game extends Component {
       NewGame(){
          let num2 = GuessNumber()
          this.randomNum=num2
-         console.log(this.randomNum)
       }
       
       functionCompine(){
